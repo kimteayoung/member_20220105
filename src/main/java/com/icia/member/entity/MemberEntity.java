@@ -12,12 +12,12 @@ import javax.persistence.*;
 @Table(name = "member_table")
 public class MemberEntity {
     @Id // pk 지정
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_imcrement
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
     @Column(name = "member_id") // 별도 컬럼이름 지정할 때
     private Long id;
 
     // m_email: 크기50, unique
-    @Column(length = 50, unique = true, name = "memberemail")
+    @Column(length = 50, unique = true)
     private String m_email;
 
     // m_pw: 크기20
