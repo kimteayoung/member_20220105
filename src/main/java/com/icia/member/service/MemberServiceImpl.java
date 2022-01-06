@@ -27,7 +27,7 @@ public class MemberServiceImpl implements MemberService {
         // 이메일 중복체크 결과가 null이 아니라면 예외를 발생시킴.
         // 예외종류: IllegalStateException, 예외메시지: 중복된 이메일입니다!!
         if (emailCheckResult != null) {
-            throw new IllegalStateException("중복된 이메일입니다!!");
+            throw new IllegalStateException("중복된 이메일입니다!!!");
         }
         return  mr.save(memberEntity).getId();
 
