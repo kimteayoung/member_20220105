@@ -8,6 +8,8 @@ import com.icia.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
@@ -20,6 +22,13 @@ public class MemberServiceImpl implements MemberService {
             2. MemberRepository의 save 메서드 호출하면서 MemberEmtity 객체 전달
          */
         MemberEntity memberEntity = MemberEntity.saveMember(memberSaveDTO);
+        // 사용자가 입력한 이메일 중복체크
+        MemberEntity emailCheckResult = mr.findByMemberEmail(memberSaveDTO.getMemberEmail());
+        // 이메일 중복체크 결과가 null이 아니라면 예외를 발생시킴.
+        // 예외종류: IllegalStateException, 예외메시지: 중복된 이메일입니다!!
+        if (emailCheckResult != null) {
+            throw new IllegalStateException("중복된 이메일입니다!!");
+        }
         return  mr.save(memberEntity).getId();
 
 
@@ -55,6 +64,13 @@ public class MemberServiceImpl implements MemberService {
             return false;
         }
 
+    }
 
+    @Override
+    public List<MemberDetailDTO> findAll() {
+        List<MemberEntity> memberEntityList = mr.findAll();
+        // List<MemberEntity> -> List<MemberDetailDTO>
+
+        return null;
     }
 }

@@ -1,6 +1,7 @@
 package com.icia.member;
 
 import com.icia.member.DTO.MemberDetailDTO;
+import com.icia.member.DTO.MemberLoginDTO;
 import com.icia.member.DTO.MemberSaveDTO;
 import com.icia.member.service.MemberService;
 import org.junit.jupiter.api.DisplayName;
@@ -39,7 +40,7 @@ public class MemberTest {
     @Test
     @Transactional // 테스트 시작할 때 새로운 트랙잭션 시작
     @Rollback // 테스트 종료 후 롤백 수행
-    @DisplayName("회원조희 테스트")
+    @DisplayName("회원조회 테스트")
     public void memberDetailTest(){
         // given: 테스트 조건 설정
         // 1. 새로운 회원을 등록하고 해당회원의 번호(member_id)를 가져옴
@@ -54,6 +55,34 @@ public class MemberTest {
         // 3. 1번에서 가입한 회원의 정보롸 2번에서 조회한 회원의 정보가 일치하면 테스트 통과 일치하지 않으면 테스트 실패
         // memberSaveDTO의 이메일값과 findMember의 이메일 값이 일치하는지 확인.
         assertThat(memberSaveDTO.getMemberEmail()).isEqualTo(findMember.getMemberEmail());
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    @DisplayName("로그인 테스트")
+    public void loginTest() {
+        /*
+            1. 테스트용 회원가입(MemberSaveDTO)
+            2. 로그인용 객체 생성(MemberLoginDTO)
+            1.2 수행할 때 동인한 이메일, 패스워드를 사용하도록함.
+            3. 로그인 수행
+            4. 로그인결과가 true인지 확인
+
+         */
+        // given
+        final String testMemberEmail = "로그인테스트이메일";
+        final String testMemberPassword = "로그인테스트비밀번호";
+        final String testMemberName = "로그인테스트이름";
+        // 1.
+        MemberSaveDTO memberSaveDTO = new MemberSaveDTO(testMemberEmail, testMemberPassword, testMemberName);
+        ms.save(memberSaveDTO);
+        // when
+        // 2.
+        MemberLoginDTO memberLoginDTO = new MemberLoginDTO(testMemberEmail, testMemberPassword);
+        boolean loginResult = ms.login(memberLoginDTO);
+        // then
+        assertThat(loginResult).isEqualTo(true);
     }
 
 }
