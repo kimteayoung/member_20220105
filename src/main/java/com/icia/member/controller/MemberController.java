@@ -11,48 +11,64 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/member/*")
-@RequiredArgsConstructor
+@RequiredArgsConstructor // final 키워드가 붙은 필드만으로 생성자를 만들어줌
 public class MemberController {
 
     private final MemberService ms;
 
     @GetMapping("save")
     public String saveForm(Model model){
-        model.addAttribute("member", new MemberSaveDTO());
+        model.addAttribute("member",new MemberSaveDTO());
         return "member/save";
+
     }
+
+
     @PostMapping("save")
     public String save(@Validated @ModelAttribute("member") MemberSaveDTO memberSaveDTO, BindingResult bindingResult){
-        System.out.println("memberSaveDTO = " + memberSaveDTO);
         System.out.println("MemberController.save");
+        System.out.println("memberSaveDTO = " + memberSaveDTO);
 
         if(bindingResult.hasErrors()){
             return "member/save";
         }
-
         ms.save(memberSaveDTO);
         return "redirect:/member/login";
     }
+
     @GetMapping("login")
     public String loginForm(Model model){
-        model.addAttribute("member2", new MemberLoginDTO());
+        model.addAttribute("login",new MemberLoginDTO());
         return "member/login";
     }
-    @PostMapping("login")
-    public String login(@Validated @ModelAttribute("member2") MemberLoginDTO memberLoginDTO, BindingResult bindingResult){
 
+    @PostMapping("login")
+    public String login(@Validated @ModelAttribute("login") MemberLoginDTO memberLoginDTO, BindingResult bindingResult,
+                        HttpSession session){
         if(bindingResult.hasErrors()){
             return "member/login";
         }
-        return "redirect:/member/findAll";
+        //boolean loginResult = ms.login(memberLoginDTO);
+        // if (loginResult){
+        if(ms.login(memberLoginDTO)){
+            session.setAttribute("loginEmail",memberLoginDTO.getMemberEmail());
+            return "redirect:/member/findAll";
+        }else {
+            // 로그인 결과를 글로벌오류(Global Error)
+            bindingResult.reject("loginFail","이메일 또는 비밀번호가 틀립니다!!");
+            return "member/login";
+        }
+
     }
 
-    // 상세조회
+    // 상세조희
     // /member/2, /member/15 => /member/{memberId}
     @GetMapping("{memberId}")
-    public String findById(@PathVariable("memberId") Long memberId, Model model){
+    public String findById(@PathVariable("memberId") Long memberId, Model model) {
         System.out.println("memberId = " + memberId);
         MemberDetailDTO member = ms.findById(memberId);
         model.addAttribute("member", member);
@@ -60,22 +76,3 @@ public class MemberController {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -11,42 +11,34 @@ import javax.persistence.*;
 @Setter
 @Table(name = "member_table")
 public class MemberEntity {
-    @Id // pk 지정
+    @Id // pk지정
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
-    @Column(name = "member_id") // 별도 컬럼이름 지정할 때
-    private Long id;
+    @Column(name = "member_id")
+    private  Long id;
 
-    // m_email: 크기50, unique
-    @Column(length = 50, unique = true)
-    private String m_email;
+    // memberEmail: 크기 50, unique
+    @Column(length = 50, unique = true) // 이름 지정하려면 name = "memberemail"을 붙여하
+    private String memberEmail;
 
-    // m_pw: 크기20
-    @Column(length = 20)
-    private String m_pw;
+    // memberPassword: 크기 20
+    @Column(length = 50)
+    private String memberPassword;
 
     // Column 생략하면 default 크기 255로 지정됨
-    private String m_name;
+    private String memberName;
 
     /*
         DTO클래스 객체를 전달받아 Entity 클래스 필드값으로 세팅하고
         Entity 객체를 리턴하는 메서드 선언
 
-        static 메서드 (정적메서드)
+        static 메서드(정적메서드): 클래스 메서드, 객체를 만들지 않고도 바로 호출 가능
      */
-    public static MemberEntity saveMember(MemberSaveDTO memberSaveDTO){
-        MemberEntity memberEntity = new MemberEntity(); // new MemberSaveDTO() 쓰고 알트 엔터치면 자동완성
-        memberEntity.setM_email(memberSaveDTO.getM_email());
-        memberEntity.setM_pw(memberSaveDTO.getM_pw());
-        memberEntity.setM_name(memberSaveDTO.getM_name());
+    public static MemberEntity saveMember(MemberSaveDTO memberSaveDTO) {
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setMemberEmail(memberSaveDTO.getMemberEmail());
+        memberEntity.setMemberPassword(memberSaveDTO.getMemberPassword());
+        memberEntity.setMemberName(memberSaveDTO.getMemberName());
         return memberEntity;
     }
+
 }
-
-
-
-
-
-
-
-
-

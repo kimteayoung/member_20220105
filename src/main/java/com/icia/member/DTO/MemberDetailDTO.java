@@ -5,17 +5,17 @@ import lombok.Data;
 
 @Data
 public class MemberDetailDTO {
-    private Long m_id;
-    private String m_email;
-    private String m_pw;
-    private String m_name;
+    private Long memberId;
+    private String memberEmail;
+    private String memberPassword;
+    private String memberName;
 
     public static MemberDetailDTO toMemberDetailDTO(MemberEntity member){
         MemberDetailDTO memberDetailDTO = new MemberDetailDTO();
-        memberDetailDTO.setM_id(member.getId());
-        memberDetailDTO.setM_email(member.getM_email());
-        memberDetailDTO.setM_pw(member.getM_pw());
-        memberDetailDTO.setM_name(member.getM_name());
+        memberDetailDTO.setMemberId(member.getId());
+        memberDetailDTO.setMemberEmail(member.getMemberEmail());
+        memberDetailDTO.setMemberPassword(member.getMemberPassword());
+        memberDetailDTO.setMemberName(member.getMemberName());
         return memberDetailDTO;
     }
 }

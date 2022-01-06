@@ -4,23 +4,22 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
-        .field-error {
+        .field-error{
             color: red;
         }
 
     </style>
 </head>
 <body>
-<h2>회원가입 페이지</h2>
+<h2>save.html</h2>
 <form action="/member/save" method="post" th:object="${member}">
-    <input type="text"  th:field="*{m_email}" placeholder="이메일"><br>
-    <p th:if="${#fields.hasErrors('m_email')}" th:errors="*{m_email}" th:errorclass="field-error"></p>
-    <input type="text"  th:field="*{m_pw}" placeholder="비밀번호"><br>
-    <p th:if="${#fields.hasErrors('m_pw')}" th:errors="*{m_pw}" th:errorclass="field-error"></p>
-    <input type="text"  th:field="*{m_name}" placeholder="이름"><br>
-    <p th:if="${#fields.hasErrors('m_name')}" th:errors="*{m_name}" th:errorclass="field-error"></p>
+    <input type="text" th:field="*{memberEmail}" placeholder="이메일"><br>
+    <p th:if="${#fields.hasErrors('memberEmail')}" th:errors="*{memberEmail}" th:errorclass="field-error"></p>
+    <input type="text" th:field="*{memberPassword}" placeholder="비밀번호"><br>
+    <p th:if="${#fields.hasErrors('memberPassword')}" th:errors="*{memberPassword}" th:errorclass="field-error"></p>
+    <input type="text" th:field="*{memberName}" placeholder="이름"><br>
+    <p th:if="${#fields.hasErrors('memberName')}" th:errors="*{memberName}" th:errorclass="field-error"></p>
     <input type="submit" value="회원가입">
-
 </form>
 </body>
 </html>

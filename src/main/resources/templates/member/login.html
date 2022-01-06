@@ -12,11 +12,14 @@
 </head>
 <body>
 <h2>로그인 페이지</h2>
-<form action="/member/login" method="post" th:object="${member2}">
-    <input type="text"  th:field="*{m_email}" placeholder="이메일"><br>
-    <p th:if="${#fields.hasErrors('m_email')}" th:errors="*{m_email}" th:errorclass="field-error"></p>
-    <input type="text"  th:field="*{m_pw}" placeholder="비밀번호"><br>
-    <p th:if="${#fields.hasErrors('m_pw')}" th:errors="*{m_pw}" th:errorclass="field-error"></p>
+<form action="/member/login" method="post" th:object="${login}">
+    <div th:if="${#fields.hasGlobalErrors()}">
+        <p class="field-error" th:each="err: ${#fields.globalErrors()}" th:text="${err}">글로벌오류</p>
+    </div>
+    <input type="text"  th:field="*{memberEmail}" placeholder="이메일"><br>
+    <p th:if="${#fields.hasErrors('memberEmail')}" th:errors="*{memberEmail}" th:errorclass="field-error"></p>
+    <input type="text"  th:field="*{memberPassword}" placeholder="비밀번호"><br>
+    <p th:if="${#fields.hasErrors('memberPassword')}" th:errors="*{memberPassword}" th:errorclass="field-error"></p>
     <input type="submit" value="로그인">
 </form>
 </body>

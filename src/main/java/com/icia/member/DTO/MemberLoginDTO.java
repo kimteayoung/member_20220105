@@ -7,9 +7,9 @@ import javax.validation.constraints.NotBlank;
 
 @Data
 public class MemberLoginDTO {
-    @NotBlank(message = "이메일은 필수입니다.")
-    private String m_email;
+    @NotBlank(message = "로그인시 이메일은 필수입니다. z")
+    private String memberEmail;
     @NotBlank
-    @Length(min = 2, max = 8, message = "비밀번호 2~8자로 입력해주세요")
-    private String m_pw;
+    @Length(min = 2, max= 8, message = "비밀번호는 2~8자로 입력해주세요")
+    private String memberPassword;
 }
