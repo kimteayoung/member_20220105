@@ -12,6 +12,9 @@ import org.springframework.test.annotation.Rollback;
 
 import javax.transaction.Transactional;
 
+import java.util.List;
+import java.util.stream.IntStream;
+
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
@@ -84,6 +87,40 @@ public class MemberTest {
         // then
         assertThat(loginResult).isEqualTo(true);
     }
+    @Test
+    @Transactional
+    @Rollback
+    @DisplayName("회원목록 테스트")
+    public void memberListTest(){
+        /*
+            member_table에 아무 데이터가 없는 상태에서
+            3명의 회원을 가입시킨 후 memberList 사이즈를 조회하여 3이면 테스트통과
+         */
+        // 1. 3명의 회원을 가입
+//        MemberSaveDTO memberSaveDTO = new MemberSaveDTO("리스트회원1", "리스트회원pw", "리스트회원이름1");
+//        ms.save(memberSaveDTO);
+//        memberSaveDTO = new MemberSaveDTO("리스트회원2", "리스트회원pw2", "리스트회원이름2");
+//        ms.save(memberSaveDTO);
+//        memberSaveDTO = new MemberSaveDTO("리스트회원3", "리스트회원pw3", "리스트회원이름3");
+//        ms.save(memberSaveDTO);
+        // 이렇게 줄일 수 있음
+//        for (int i=0; i<=3; i++) {
+//            MemberSaveDTO memberSaveDTO = new MemberSaveDTO("리스트회원"+i, "리스트회원pw"+i, "리스트회원이름"+i);
+//            ms.save(memberSaveDTO);
+        // 이게 마지막으로 줄인거
+//            ms.save(new MemberSaveDTO("리스트회원"+i, "리스트회원pw"+i, "리스트회원이름"+i));
+//    }
+
+        // IntStream 방식, Arrow Function(화살표함수)
+        IntStream.rangeClosed(1, 3).forEach(i -> {
+            ms.save(new MemberSaveDTO("리스트회원" + i, "리스트회원pw" + i, "리스트회원이름" + i));
+        });
+
+        List<MemberDetailDTO> list = ms.findAll();
+        assertThat(list.size()).isEqualTo(3);
+    }
+
+
 
 }
 

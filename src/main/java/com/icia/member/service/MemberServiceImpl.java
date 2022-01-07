@@ -8,6 +8,7 @@ import com.icia.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -70,7 +71,13 @@ public class MemberServiceImpl implements MemberService {
     public List<MemberDetailDTO> findAll() {
         List<MemberEntity> memberEntityList = mr.findAll();
         // List<MemberEntity> -> List<MemberDetailDTO>
-
+        List<MemberDetailDTO> memberList = new ArrayList<>();
+        for(MemberEntity m: memberEntityList) {
+            // Entity 객체를 MemberDetailDTO로 변환하고 memberList에 담음.
+//            MemberDetailDTO memberDetailDTO = MemberDetailDTO.toMemberDetailDTO(m);
+//            memberList.add(memberDetailDTO);
+            memberList.add(MemberDetailDTO.toMemberDetailDTO(m));
+        }
         return null;
     }
 }
