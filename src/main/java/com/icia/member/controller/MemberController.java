@@ -16,7 +16,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/member/*")
-@RequiredArgsConstructor // final 키워드가 붙은 필드만으로 생성자를 만들어줌
+@RequiredArgsConstructor // final 키워드가 붙은 필드만으로 생성자를 만들어줌.
 public class MemberController {
 
     private final MemberService ms;
